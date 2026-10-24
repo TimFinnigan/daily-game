@@ -24,9 +24,10 @@ window.ConnectionGame = (() => {
     return puzzle.a.some((ans) => g === ans || g.replace(/s$/, "") === ans);
   };
 
-  function render(panel, seed) {
+  // `data` is the day's puzzle from puzzles/*.js. Without it, rotate through the bank.
+  function render(panel, seed, data) {
     const dayNumber = Math.floor(Date.parse(seed) / 864e5);
-    const puzzle = PUZZLES[((dayNumber % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+    const puzzle = data || PUZZLES[((dayNumber % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
 
     panel.innerHTML = `
       <h2>Connections</h2>

@@ -43,8 +43,9 @@ window.TriviaGame = (() => {
       .trim();
   }
 
-  function render(panel, seed) {
-    const picks = shuffle(QUESTIONS, rng("trivia" + seed)).slice(0, COUNT);
+  // `data` is the day's questions from puzzles/*.js. Without it, pick from the bank.
+  function render(panel, seed, data) {
+    const picks = data || shuffle(QUESTIONS, rng("trivia" + seed)).slice(0, COUNT);
 
     panel.innerHTML = `
       <h2>Trivia</h2>

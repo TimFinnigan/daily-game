@@ -18,9 +18,11 @@ window.JumbleGame = (() => {
     return word.split("").reverse().join("");
   }
 
-  function render(panel, seed) {
+  // `data` is the day's word list from puzzles/*.js. Without it, pick from the bank.
+  function render(panel, seed, data) {
     const rand = rng("jumble" + seed);
-    const puzzles = shuffle(WORDS, rand).slice(0, COUNT).map((word) => ({
+    const words = data || shuffle(WORDS, rand).slice(0, COUNT);
+    const puzzles = words.map((word) => ({
       word,
       scrambled: scramble(word, rand),
     }));
@@ -34,7 +36,7 @@ window.JumbleGame = (() => {
 
     const rows = panel.querySelector(".rows");
     const status = panel.querySelector(".status");
-    const solved = new Array(COUNT).fill(false);
+    const solved = new Array(words.length).fill(false);
 
     const items = puzzles.map((p, i) => {
       const row = document.createElement("div");
@@ -73,7 +75,7 @@ window.JumbleGame = (() => {
 
     function updateStatus() {
       const n = solved.filter(Boolean).length;
-      status.textContent = n === COUNT ? "All solved. See you tomorrow." : "";
+      status.textContent = n === words.length ? "All solved. See you tomorrow." : "";
     }
 
     panel.querySelector(".reveal").addEventListener("click", () => {

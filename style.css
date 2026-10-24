@@ -89,6 +89,7 @@ body {
 .jumble-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.8em;
   padding: 0.35em 0;
 }
@@ -275,34 +276,110 @@ button:hover { background: var(--ink); color: var(--paper); }
 
 .link-solved .common-row .blank { color: var(--good); border-bottom-color: var(--good); }
 
-/* Print: the same layout as the screen, scaled down to fit one US Letter page. */
+.notice {
+  max-width: 1000px;
+  margin: 0 auto 12px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--bad);
+}
+
+@media screen and (min-width: 721px) {
+  .notice { width: 100%; margin-bottom: 6px; }
+}
+
+/* Laptop screens: one compact header row, and panels sized to fit the window without scrolling. */
+@media screen and (min-width: 721px) {
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 14px 32px 18px;
+  }
+
+  .masthead, #panels { width: 100%; }
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5em;
+    margin-bottom: 8px;
+    padding: 0 0 6px;
+    text-align: left;
+  }
+  .masthead h1 { font-size: 1.5rem; }
+  .masthead p { flex: 1; margin: 0; font-size: 1.1rem; text-align: right; }
+  .toolbar { max-width: none; margin: 0; }
+
+  #panels {
+    flex: 1;
+    grid-template-rows: repeat(2, minmax(min-content, 1fr));
+  }
+
+  .panel { font-size: clamp(12px, 2vh, 17px); }
+  .panel,
+  .panel:nth-child(odd),
+  .panel:nth-child(even),
+  .panel:nth-child(-n+2) { padding-top: 1.2em; padding-bottom: 1em; }
+  /* Titles sit at the top of every panel. Auto margins above the puzzle and above the
+     status line centre the puzzle in the space between them, with the buttons pinned below. */
+  .panel h2 { margin: 0 0 0.6em; }
+  .panel h2 + * { margin-top: auto; }
+
+  .trivia-row { padding: 0.35em 0; }
+  .jumble-row { padding: 0.25em 0; }
+  /* Nudge the jumble rows left of centre. */
+  .jumble-row { padding-right: 25%; }
+  .link-words { gap: 0.6em; margin: 0.4em 0 1.7em; }
+  .link-word { min-height: 2.4em; }
+  .common-rows { margin: 0.4em 0 0.9em; }
+  .common-row { margin-bottom: 0.45em; }
+  .status { padding-top: 0.5em; min-height: 1.6em; }
+  .actions { margin-top: 0.4em; }
+}
+
+/* Print: title at the top, then the four panels filling the rest of one US Letter page. */
 @media print {
   @page { size: 8.5in 11in; margin: 0.5in; }
 
   :root { --rule: #666; }
 
   html, body { background: #fff; }
-  /* Centre the masthead and panels vertically on the page. */
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 9.8in;
-    padding: 0;
-  }
-  .toolbar, .actions, .status { display: none; }
+  /* Some browsers ignore the @page margin, so keep the content off the top edge ourselves. */
+  body { padding: 0.35in 0 0; }
+  .toolbar, .actions, .status, .notice { display: none; }
 
   .masthead, #panels { max-width: none; width: 100%; }
-  .masthead { margin-bottom: 0.2in; }
+  .masthead { margin-bottom: 0.4in; padding: 0; }
+  .masthead h1 { font-size: 24pt; }
+  .masthead p { margin: 2px 0 0; font-size: 13pt; }
+
+  #panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 1fr 1fr;
+    height: 8.1in;
+  }
 
   .panel,
   .panel:nth-child(odd),
   .panel:nth-child(even),
   .panel:nth-child(-n+2) {
-    padding: 0.25in 0.3in;
+    padding: 0.2in 0.3in;
     break-inside: avoid;
   }
-  .panel { font-size: 10pt; }
+  .panel { font-size: 12pt; }
+
+  /* Titles sit at the same height in every panel, with each puzzle centred below them. */
+  .panel h2 { margin: 0 0 0.7em; }
+  .panel h2 + * { margin-top: auto; }
+  .panel::after { content: ""; margin-top: auto; }
+
+  .trivia-row { padding: 0.35em 0; }
+  .trivia-row input { width: 7em; }
+  .link-words { margin: 0.4em 0 1.2em; }
+  .common-rows { margin: 0.4em 0 1.2em; }
 
   .boxes input, .link-word, .trivia-row input { border-color: var(--rule); color: #000; }
   .link-guess input { color: #000; border-color: var(--rule); }

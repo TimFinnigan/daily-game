@@ -17,9 +17,10 @@ window.CommonWordGame = (() => {
 
   const normalise = (text) => text.toLowerCase().replace(/[^a-z]/g, "");
 
-  function render(panel, seed) {
+  // `data` is the day's puzzle from puzzles/*.js. Without it, rotate through the bank.
+  function render(panel, seed, data) {
     const dayNumber = Math.floor(Date.parse(seed) / 864e5);
-    const puzzle = PUZZLES[((dayNumber % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+    const puzzle = data || PUZZLES[((dayNumber % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
 
     panel.innerHTML = `
       <h2>Prefixes</h2>
