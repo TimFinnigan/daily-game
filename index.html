@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Daily Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="masthead">
+    <h1>Daily Game</h1>
+    <p id="date"></p>
+  </header>
+
+  <div class="toolbar"><button type="button" onclick="window.print()">Print</button></div>
+
+  <main id="panels"></main>
+
+  <script src="games/util.js"></script>
+  <script src="games/jumble.js"></script>
+  <script src="games/trivia.js"></script>
+  <script src="games/commonword.js"></script>
+  <script src="games/connection.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
