@@ -28,7 +28,7 @@ window.JumbleGame = (() => {
     }));
 
     panel.innerHTML = `
-      <h2>Jumble</h2>
+      <h2>Jumbles</h2>
       <div class="rows"></div>
       <p class="status" aria-live="polite"></p>
       <div class="actions"><button type="button" class="reveal">Reveal</button></div>
