@@ -45,8 +45,9 @@ body {
 }
 
 .toolbar {
+  margin-top: 16px;
   margin-bottom: 8px;
-  text-align: right;
+  text-align: center;
 }
 
 /* One panel per game. Everything inside a panel is sized in em,
